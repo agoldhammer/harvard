@@ -12,7 +12,7 @@ a.menuitem:active {font-weight: bold; font-style: italic; color: white}
 
 a.menuitem:hover {font-weight: bold; font-style: italic; color: green}
 
-a.menuitem {font-weight: bold; font-style: italic; text-decoration: none; margin: 0px}
+a.menuitem {font-weight: bold; font-style: italic; text-decoration: none; margin: 25px}
 
 div.menuitem {float: left; min-width: 15%}
 
