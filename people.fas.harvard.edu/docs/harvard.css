@@ -1,8 +1,8 @@
 body {margin: 0px; padding: 0px}
 
-div.header {float: left; width: 95%; margin: 0px;}
+div.header {float: left; width: 100%; margin: 0px; padding-left: 20px; color:rgb(71, 110, 110);}
 
-div.header p {font: bolder; font-size: 24pt}
+/* div.header h1 {font: bolder; font-size: 24pt; color: "blue";} */
 
 a.menuitem:link {font-weight: bold; font-style: italic; color: white}
 
@@ -14,21 +14,21 @@ a.menuitem:hover {font-weight: bold; font-style: italic; color: green}
 
 a.menuitem {font-weight: bold; font-style: italic; text-decoration: none; margin: 25px}
 
-div.menuitem {float: left; min-width: 15%}
+div.menuitem {float: left; min-width: 8%}
 
-div.idbar {float: left; background:  #CC9E7F; width: 740px; padding-bottom: 10px;}
+div.idbar {float: left; background:  #CC9E7F; width: 100%; padding-bottom: 10px;}
 
 div.idbar span {font-size: small; font-style: oblique; font-weight: bold; margin-left: 30px}
 
-div.menubar {background: #CCB17F; clear: both; float: left; width: 780px}
+div.menubar {background: #CCB17F; clear: both; float: left; width: 100%}
 
 div.hseparator {background-image: url(yellowcicada.gif); clear: both; float: left; width: 95%; max-height: 20px; min-height: 10px;}
 
-div.leftcol {background-image: url(yellowcicada.gif); clear: both; float: left; min-height: 1100px; width: 2%}
+div.leftcol {background-image: url(yellowcicada.gif); clear: both; float: left; width: 50%;}
 
-div.mainbody {float: left; width: 50%;}
+div.mainbody {float: left; width: 30%;}
 
-div.rightcol {float: left; width: 30%}
+div.rightcol {float: left; width: 50%}
 
 div.footer {background-image: url(yellowcicada.gif); min-height: 45px; max-height: 50px; clear: both; float: left; width: 100%;}
 
