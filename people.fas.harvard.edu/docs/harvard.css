@@ -53,13 +53,16 @@ div.idbar {
   float: left;
   background: #cc9e7f;
   width: 100%;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-div.idbar span {
+div.idbar p {
   font-size: small;
   font-style: oblique;
   font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
   margin-left: 30px;
 }
 
@@ -74,7 +77,7 @@ div.hseparator {
   background-image: url(yellowcicada.gif);
   clear: both;
   float: left;
-  width: 95%;
+  width: 100%;
   max-height: 20px;
   min-height: 10px;
 }
