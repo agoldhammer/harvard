@@ -1,172 +1,219 @@
-body {
-  margin: 0px;
-  padding: 0px;
+/* ==========================================================================
+   harvard.css — the homepage.
+
+   The page is laid out as a spread: a title page, a frontispiece, and then
+   two facing pages divided by a fold. Verso carries the writing; recto
+   carries the links. Requires base.css, linked first.
+   ========================================================================== */
+
+.spread {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3.5rem)
+    clamp(4rem, 8vw, 7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-areas:
+    'masthead   masthead'
+    'plate      plate'
+    'verso      recto';
 }
 
-div.header {
-  float: left;
+/* --------------------------------------------------------------------------
+   Title page
+   -------------------------------------------------------------------------- */
+
+.masthead {
+  grid-area: masthead;
+}
+
+.name {
+  margin: 0;
+  font-weight: 200;
+  font-size: clamp(2.9rem, 8.5vw, 6.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.022em;
+}
+
+.affiliation {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--smallcaps);
+  font-size: clamp(0.78rem, 1.5vw, 0.9rem);
+  letter-spacing: 0.11em;
+  line-height: 1.75;
+  color: var(--ink-muted);
+}
+
+/* The fold opens. One gesture, and only on first paint. */
+.masthead::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: clamp(1.75rem, 3vw, 2.75rem);
+  background: var(--vermilion);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: unfold 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 120ms forwards;
+}
+
+@keyframes unfold {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead::after {
+    transform: scaleX(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Frontispiece
+   -------------------------------------------------------------------------- */
+
+.plate {
+  grid-area: plate;
+  margin: clamp(1.75rem, 3vw, 2.75rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.plate img {
   width: 100%;
-  margin: 0px;
-  padding-left: 20px;
-  color: rgb(71, 110, 110);
+  aspect-ratio: 2.4 / 1;
+  object-fit: cover;
+  object-position: center 40%;
+  background: var(--surface);
 }
 
-/* div.header h1 {font: bolder; font-size: 24pt; color: "blue";} */
+/* --------------------------------------------------------------------------
+   The fold. Half the gutter belongs to each page.
+   -------------------------------------------------------------------------- */
 
-a.menuitem:link {
-  font-weight: bold;
+.verso {
+  grid-area: verso;
+  padding-right: calc(var(--gutter) / 2);
+}
+
+.recto {
+  grid-area: recto;
+  padding-left: calc(var(--gutter) / 2);
+  border-left: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   Section labels
+   -------------------------------------------------------------------------- */
+
+.label {
+  margin: 0 0 1.75rem;
+  font-family: var(--smallcaps);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Selected articles — the margin apparatus.
+
+   Each entry carries a marginal column of small-caps tags taken from the
+   file itself: its format, and whether it is written in French.
+   -------------------------------------------------------------------------- */
+
+.bib {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bib > li {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, var(--measure));
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+}
+
+.tags {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  font-family: var(--smallcaps);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  line-height: inherit;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.tag-fr {
+  color: var(--vermilion);
+}
+
+/* Foreign-language titles take italic, as they would in a printed note. */
+.bib .fr > a {
   font-style: italic;
-  color: white;
 }
 
-a.menuitem:visited {
-  font-weight: bold;
-  font-style: italic;
-  color: white;
+/* --------------------------------------------------------------------------
+   Links
+   -------------------------------------------------------------------------- */
+
+.linklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-a.menuitem:active {
-  font-weight: bold;
-  font-style: italic;
-  color: white;
+.linklist li {
+  padding: 0.5rem 0;
 }
 
-a.menuitem:hover {
-  font-weight: bold;
-  font-style: italic;
-  color: green;
+/* --------------------------------------------------------------------------
+   The spread closes below 900px: one page, no fold.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'masthead'
+      'plate'
+      'verso'
+      'recto';
+  }
+
+  .verso {
+    padding-right: 0;
+  }
+
+  .recto {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    padding-left: 0;
+    padding-top: clamp(2.5rem, 6vw, 3.5rem);
+    border-left: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  .plate img {
+    aspect-ratio: 16 / 9;
+  }
 }
 
-a.menuitem {
-  font-weight: bold;
-  font-style: italic;
-  text-decoration: none;
-  margin: 25px;
-}
+@media (max-width: 560px) {
+  .plate img {
+    aspect-ratio: 3 / 2;
+  }
 
-div.menuitem {
-  float: left;
-  min-width: 8%;
-}
+  .bib > li {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.1rem;
+    padding: 0.6rem 0;
+  }
 
-div.idbar {
-  float: left;
-  background: #cc9e7f;
-  width: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-div.idbar p {
-  font-size: small;
-  font-style: oblique;
-  font-weight: bold;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 30px;
-}
-
-div.menubar {
-  background: #ccb17f;
-  clear: both;
-  float: left;
-  width: 100%;
-}
-
-div.hseparator {
-  background-image: url(yellowcicada.gif);
-  clear: both;
-  float: left;
-  width: 100%;
-  max-height: 20px;
-  min-height: 10px;
-}
-
-div.leftcol {
-  background-image: url(yellowcicada.gif);
-  clear: both;
-  float: left;
-  width: 50%;
-}
-
-div.mainbody {
-  float: left;
-  width: 100%;
-}
-
-div.rightcol {
-  float: left;
-  width: 50%;
-}
-
-/* div.footer {
-  background-image: url(yellowcicada.gif);
-  min-height: 45px;
-  max-height: 50px;
-  clear: both;
-  float: left;
-  width: 100%;
-} */
-
-/* End of style section. Generated by AceHTML at 7/28/2007 8:59:21 AM */
-
-div.mainbody table {
-  font-family: Arial;
-  font-size: 12px;
-  font-style: oblique;
-  background: #f5f3a9;
-  border-spacing: 1pt 1pt;
-  width: 90%;
-}
-
-div.mainbody {
-  text-decoration: none;
-}
-
-div.rightcol table {
-  padding-left: 3px;
-  font-family: Arial;
-  font-size: 12px;
-  font-style: oblique;
-  background: #f5f3a9;
-  border-spacing: 1pt 1pt;
-  width: 95%;
-}
-
-div.rightcol {
-  text-decoration: none;
-}
-
-div.mainbody a:link {
-  color: blue;
-  text-decoration: none;
-}
-div.mainbody a:visited {
-  color: blue;
-  text-decoration: none;
-}
-div.mainbody a:active {
-  color: blue;
-  text-decoration: none;
-}
-div.mainbody a:hover {
-  color: red;
-  text-decoration: none;
-}
-
-div.rightcol a:link {
-  color: blue;
-  text-decoration: none;
-}
-div.rightcol a:visited {
-  color: blue;
-  text-decoration: none;
-}
-div.rightcol a:active {
-  color: blue;
-  text-decoration: none;
-}
-div.rightcol a:hover {
-  color: red;
-  text-decoration: none;
+  .tags {
+    justify-content: flex-start;
+  }
 }

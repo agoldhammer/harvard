@@ -1,0 +1,156 @@
+/* ==========================================================================
+   article.css — a reading shell for the legacy article pages.
+
+   These files are raw Word 97 / Word 2003 / OpenOffice exports: no structure
+   to hook into, ~250 <font> tags, inline mso styling, and presentational
+   attributes throughout. Rather than rewrite them, this sheet neutralizes the
+   generator's typography and sets the page as a reading column.
+
+   Requires base.css, linked first.
+   ========================================================================== */
+
+body {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(4rem, 8vw, 6rem);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   Neutralize the generator
+   -------------------------------------------------------------------------- */
+
+body * {
+  font-family: var(--serif) !important;
+}
+
+font {
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+/* Every inline style in these documents is mso residue. */
+p[style],
+span[style],
+div[style],
+li[style],
+td[style] {
+  font-size: inherit !important;
+  color: inherit !important;
+  background: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Unhyphenated justified text reads badly on screen; centring is meaningful. */
+[align='justify'] {
+  text-align: left;
+}
+
+/* OpenOffice dumped the print header and footer — running titles and page
+   number fields — into the body. They mean nothing on a web page. */
+div[type='header' i],
+div[type='footer' i] {
+  display: none;
+}
+
+p {
+  margin: 0 0 1.15em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 2.25rem 0 0.85rem;
+}
+
+h1 {
+  font-size: 1.9rem;
+  font-weight: 200;
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+blockquote {
+  margin: 1.5em 0;
+  padding-left: 1.35rem;
+  border-left: 1px solid var(--rule);
+  color: var(--ink-muted);
+}
+
+table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+img {
+  margin: 0.35rem 1.15rem 0.85rem 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+
+/* Links inside running prose need to be visible without shouting. */
+a {
+  text-decoration-color: var(--rule);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Running head and tail — where these pages had nothing at all.
+   -------------------------------------------------------------------------- */
+
+.doc-header,
+.doc-footer {
+  font-family: var(--smallcaps) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.11em;
+}
+
+.doc-header *,
+.doc-footer * {
+  font-family: var(--smallcaps) !important;
+}
+
+.doc-header {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--vermilion);
+}
+
+.doc-footer {
+  margin-top: clamp(3rem, 7vw, 4.5rem);
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--rule);
+}
+
+.doc-header a,
+.doc-footer a {
+  color: var(--ink-muted);
+  text-decoration-color: transparent;
+}
+
+.doc-header a:hover,
+.doc-footer a:hover {
+  color: var(--vermilion);
+  text-decoration-color: currentColor;
+}
