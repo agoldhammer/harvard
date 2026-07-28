@@ -34,7 +34,7 @@ tiny)
 con1)
 	# /var/www/artsite is ours alone, so it needs no extra excludes.
 	dest=con1:/var/www/artsite/
-	done_msg="Deployed. https://www.ghmr.net/ag/"
+	done_msg="Deployed. https://art.ghmr.net/"
 	;;
 *)
 	echo "usage: $0 [tiny|con1]" >&2
