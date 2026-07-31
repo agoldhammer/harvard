@@ -15,9 +15,17 @@ cd "$(dirname "$0")"
 target=${1:-tiny}
 
 # Excludes both targets need.
+#
+# docs/content.html is the homepage in plain HTML; what ships is the encoded
+# docs/content.enc built from it by tools/encode-content.py. Shipping the
+# plaintext would hand a crawler exactly what the gate withholds, so this
+# exclude is load-bearing -- as is the one for tools/, which holds the
+# encoder and has no business on a web server.
 set -- --exclude '.git/' \
 	--exclude 'deploy.sh' \
-	--exclude 'workspace.code-workspace'
+	--exclude 'workspace.code-workspace' \
+	--exclude 'tools/' \
+	--exclude 'docs/content.html'
 
 case "$target" in
 tiny)

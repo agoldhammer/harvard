@@ -1,0 +1,106 @@
+/* ==========================================================================
+   gate.css — the challenge that stands in front of the homepage.
+
+   Styled as a printed slip laid on the page: the same paper, the same
+   typefaces, the small caps of the section labels. Requires base.css,
+   linked first.
+   ========================================================================== */
+
+.gate {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* Needed: `display: grid` above outweighs the browser's own rule for the
+   hidden attribute, and without this the dead form shows above the noscript
+   slip when scripting is off. */
+.gate[hidden] {
+  display: none;
+}
+
+.gate-slip {
+  width: 100%;
+  max-width: 26rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.gate-label {
+  margin: 0 0 1.25rem;
+  font-family: var(--smallcaps);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+
+.gate-question {
+  margin: 0 0 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.gate-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.gate-input {
+  flex: 1 1 7rem;
+  min-width: 0;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  padding: 0.6rem 0.75rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.gate-button {
+  flex: 0 0 auto;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--vermilion);
+  padding: 0.6rem 1.4rem;
+  font-family: var(--smallcaps);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.gate-button:hover {
+  background: var(--vermilion);
+  color: var(--paper);
+}
+
+/* Wrong answers, and the note shown when scripting is off. Reserves its own
+   line so the slip does not jump when the message appears. */
+.gate-note {
+  margin: 1.25rem 0 0;
+  min-height: 1.6em;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.gate-note[data-state='wrong'] {
+  color: var(--vermilion);
+}
+
+/* Labelled for a screen reader, invisible to everyone else. */
+.gate-vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
