@@ -7,7 +7,7 @@
    it has to run this file to see anything at all.
 
    Answering also sets a cookie that nginx requires before it will serve
-   anything under docs/oeuvrecomplete/, so the articles themselves are behind
+   anything under docs/aoc/, so the articles themselves are behind
    the gate rather than merely behind names a crawler has not learned yet.
 
    What this is worth: it stops the crawlers and address harvesters that only
