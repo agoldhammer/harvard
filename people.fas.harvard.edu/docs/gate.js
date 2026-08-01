@@ -6,9 +6,14 @@
    fetches the URL and reads the source finds no titles and no mail address:
    it has to run this file to see anything at all.
 
+   Answering also sets a cookie that nginx requires before it will serve
+   anything under docs/oeuvrecomplete/, so the articles themselves are behind
+   the gate rather than merely behind names a crawler has not learned yet.
+
    What this is worth: it stops the crawlers and address harvesters that only
    read HTML, which is most of them. It does not stop a headless browser, and
-   the key below is in plain sight. A deterrent, not a wall.
+   both the key and the cookie token below are in plain sight. A deterrent,
+   not a wall.
 
    The gate only stands on the public host: on tiny the page opens straight
    away, see GUARDED_HOSTS. Either way the content is fetched over HTTP, so
@@ -26,6 +31,18 @@
   /* One answer stands for thirty days. */
   var STORE_KEY = 'ag-gate';
   var TTL = 30 * 24 * 60 * 60 * 1000;
+
+  /* The articles are what the harvesters are actually after, and they sat at
+     plain static URLs that the gate never touched: anything holding a path
+     could fetch them cold, without ever seeing a question. nginx on the
+     public host now serves them only to a request carrying this cookie (see
+     artsite.conf), which makes the file names stop mattering.
+
+     The token is in plain sight here, exactly like KEY. A scraper that reads
+     this file can forge the cookie; one that does not read it gets nothing.
+     The same bargain as the rest of the gate: a deterrent, not a wall. */
+  var COOKIE = 'agpass';
+  var TOKEN = 'lecture-faite';
 
   /* Spelled out, so that the arithmetic has to be read rather than pattern
      matched. Answers stay under twenty: see WORDS. */
@@ -89,9 +106,24 @@
     }
   }
 
+  /* Set from reveal(), so that every way into the page grants the cookie and
+     none can be forgotten: a fresh answer, a pass remembered from a previous
+     visit, or a host that does not stand the gate at all. The cookie can also
+     be cleared or expire while localStorage still remembers the pass, and a
+     reader let through with no cookie would find every article forbidden. */
+  function setPassCookie() {
+    /* Secure would keep the cookie from ever being set over plain HTTP, which
+       is how tiny serves; there the gate does not stand anyway. */
+    var secure = location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = COOKIE + '=' + TOKEN + '; Path=/; Max-Age=' +
+      Math.floor(TTL / 1000) + '; SameSite=Lax' + secure;
+  }
+
   /* ------------------------------------------------------------------ */
 
   function reveal() {
+    setPassCookie();
+
     fetch('docs/content.enc')
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
